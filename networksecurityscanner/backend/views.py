@@ -1,15 +1,8 @@
-from ast import arguments
-from multiprocessing import context
-import pprint
-from urllib import request
 from django.shortcuts import render
 import threading
-import time
 import win32con
 import win32service
-import sys
 import socket
-from datetime import datetime
 import requests
 from . import hack
 
@@ -116,25 +109,29 @@ def dashboard(request):
         openPortsList.clear()
         hostname = request.POST['hostname']
         tranferProtocol = request.POST['tranferProtocol']
-        print(tranferProtocol)
-        try:
-            host_ip = getIP(hostname) 
-            header_details = hack.scanWebHeader(tranferProtocol+"://"+hostname)
-            for i in range(0,5000):
-                thread = threading.Thread(target=scan_port, args=(i,hostname))
-                thread.start()
-            context = { 
-                "openPort": openPortsList,
-                "tranferProtocol":tranferProtocol,
-                "hostname":hostname,
-                "host_ip": host_ip,
-                "header_details" :header_details['header'],
-                "headerHas" : header_details['headerHas'],
-                "headerHasNot": header_details['headerHasNot'],
-            }
-            return render(request,"./index.html",context)
-        except Exception as err:
-            print(err)
+        scanType = request.POST['scanType']
+        if scanType == "light":
+            try:
+                host_ip = getIP(hostname) 
+                header_details = hack.scanWebHeader(tranferProtocol+"://"+hostname)
+                for i in range(0,5000):
+                    thread = threading.Thread(target=scan_port, args=(i,hostname))
+                    thread.start()
+                context = { 
+                    "openPort": openPortsList,
+                    "tranferProtocol":tranferProtocol,
+                    "hostname":hostname,
+                    "host_ip": host_ip,
+                    "header_details" :header_details['header'],
+                    "headerHas" : header_details['headerHas'],
+                    "headerHasNot": header_details['headerHasNot'],
+                }
+                return render(request,"./index.html",context)
+            except Exception as err:
+                print(err)
+        else:
+            #Extensive scan code here 
+            pass
     context ={
         "opePort":"Scan"
     }
@@ -192,8 +189,3 @@ def vulHeaders(request):
         context = scanWebHeader(hostname)
         print(context)
     return render(request,"./pages/vul_header.html",context)
-
-
-
-
-    

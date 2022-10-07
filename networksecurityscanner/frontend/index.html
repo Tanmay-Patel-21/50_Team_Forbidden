@@ -83,7 +83,7 @@
           <div class="value">
               <div class="green py-1">
                 {% for header in headerHasNot  %}
-                  <button class="btn btn-danger">{{header}}</button>
+                  <button class="btn btn-danger ">{{header}}</button>
                 {% endfor %}
               </div>
               <div class="red py-1">
@@ -115,7 +115,7 @@
                 {{missingHeaders}}
               </div>
               <div class="value">
-                <a href="{{hostname}}" target="__blank">{{hostname}}</a>
+                <!-- <a href="{{hostname}}" target="__blank">{{hostname}}</a> -->
               </div>
               {% endfor %}
 
@@ -151,6 +151,28 @@
         </div>
       </div>
   
+      {% if tranferProtocol == "http" %}
+      <div class="scan-details-container">
+        <div>
+            <div class="detail-head">
+              <h2>Warnings</h2>
+            </div>
+            <div class="scan-details">
+              <div class="details">
+
+                <div class="key">
+                    Site is using HTTP
+                </div>
+                <div class="value">
+                  This site is served in HTTP and did not redirected in HTTPS.
+                </div>
+  
+              </div>
+            </div>
+          </div>
+        </div>
+      {% endif %}
+
 
 </body>
 </html>

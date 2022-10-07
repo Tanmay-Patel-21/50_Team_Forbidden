@@ -125,6 +125,7 @@ def dashboard(request):
                 thread.start()
             context = { 
                 "openPort": openPortsList,
+                "tranferProtocol":tranferProtocol,
                 "hostname":hostname,
                 "host_ip": host_ip,
                 "header_details" :header_details['header'],

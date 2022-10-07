@@ -7,6 +7,8 @@
     <title>Document</title>
 </head>
 <body>
-        {{services}}
+    {% for service in services %}
+        {{service}}
+    {% endfor %}
 </body>
 </html>

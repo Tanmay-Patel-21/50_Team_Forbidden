@@ -4,16 +4,99 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
+    <title>Open Ports</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+    <style>
+        #searchbar{
+	margin-left: 16%;
+	padding:15px;
+	border-radius: 10px;
+}
+
+input[type=text] {
+	width: 10%;
+	-webkit-transition: width 0.15s ease-in-out;
+	transition: width 0.15s ease-in-out;
+}
+
+/* When the input field gets focus,
+		change its width to 100% */
+input[type=text]:focus {
+	width: 30%;
+}
+
+#list{
+	font-size: 1.5em;
+	margin-left: 90px;
+}
+
+.animals{
+display: list-item;	
+}
+
+    </style>
+    <script>
+        // JavaScript code
+function search_animal() {
+	let input = document.getElementById('searchbar').value
+	input=input.toLowerCase();
+	let x = document.getElementsByClassName('animals');
+	
+	for (i = 0; i < x.length; i++) {
+		if (!x[i].innerHTML.toLowerCase().includes(input)) {
+			x[i].style.display="none";
+		}
+		else {
+			x[i].style.display="list-item";				
+		}
+	}
+}
+
+    </script>
+
 </head>
 <body>
     <form method="post">
         {% csrf_token %}
-        <input type="text" name="hostname" id="">
-        <button type="Submit">Submit</button>
-        <div>
-            {{ openPort }}
-        </div>
+        <h2 style="	margin-left: 15%;
+        padding:15px;
+        border-radius: 10px;">Enter your host name:<br>
+        </h2>
+        <input id="searchbar" onkeyup="search_animal()" type="text"
+        name="hostname" placeholder="Search host names.." >
+        <!-- <select name="scanop">
+            <option value="tcp">
+                    Scan TCP Ports
+            </option>
+            
+            <option value="udp">
+                Scan UDP Ports
+           </option>
+        
+            <option value="userdefined">
+            Scan All
+            </option>
+
+        </select>
+       -->
+    <!-- ordered list -->
+    <button type="Submit" style="	margin-left: 15%;
+padding:15px;
+border-radius: 10px;" class="fa fa-search">
+</button>
+    <ol id='list'>
+            {% for port in openPort %}
+            <li class="animals">  
+                {{ port }}        
+            </li>
+            {% endfor %}
+    </ol>
+      
+    <!-- linking javascript -->
+    <script src="./animals.js"></script>
+
+    
+       
     </form>
 </body>
 </html>

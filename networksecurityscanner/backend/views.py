@@ -7,9 +7,57 @@ import win32service
 import sys
 import socket
 from datetime import datetime
+import requests
 
 #Functions
 
+def scanWebHeader(domain):
+    #"https://www.hackthissite.org"
+    headers = requests.get(domain).headers
+    print(requests.get(domain))
+    print(headers)
+    for key in headers:
+        print(key)
+    # X-Frame-Options Referrer-Policy Content-Security-Policy Permissions-Policy X-Content-Type-Options Strict-Transport-Security X-XSS-Protection
+    headerHas = []
+    headerHasNot = []
+    if 'X-Frame-Options' in headers:
+        headerHas.append('X-Frame-Options')
+    else:
+        headerHasNot.append('X-Frame-Options')
+
+    if 'Referrer-Policy' in headers:
+        headerHas.append('Referrer-Policy')
+    else:
+        headerHasNot.append('Referrer-Policy')
+
+    if 'Content-Security-Policy' in headers:
+        headerHas.append('Content-Security-Policy')
+    else:
+        headerHasNot.append('Content-Security-Policy')
+
+    if 'Permissions-Policy' in headers:
+        headerHas.append('Permissions-Policy')
+    else:
+        headerHasNot.append('Permissions-Policy')
+
+    if 'X-Content-Type-Options' in headers:
+        headerHas.append('X-Content-Type-Options')
+    else:
+        headerHasNot.append('X-Content-Type-Options')
+    
+    if 'X-XSS-Protection' in headers:
+        headerHas.append('X-XSS-Protection')
+    else:
+        headerHasNot.append('X-XSS-Protection')
+    
+    
+    context = {
+        "headerHas" : headerHas,
+        "headerHasNot": headerHasNot
+    }
+    return context
+    
 # function to scan ports and see which ports are open
 openPortsList = [] #open ports array global variable
 def scan_port(port,hostname):
@@ -32,7 +80,6 @@ def scan_port(port,hostname):
         openPortsList.append(portNumber)
         return port
 
-start_time = time.time()
 
 all_services=[]
 def ListServices():
@@ -61,8 +108,18 @@ def openPorts(request):
     if request.method == "POST":
         openPortsList.clear()
         hostname = request.POST['hostname']
+        ports_scan = request.POST['scanop']
+
+        #udp 4096 - 65535
+        if ports_scan == "tcp":
+            scan_range = range(0,4095)
+        elif ports_scan == "udp":
+            scan_range = range(4096,65535)
+        else:
+            scan_range = range(0,65535)
+
         try:
-            for i in range(0, 3000):
+            for i in scan_range:
                 thread = threading.Thread(target=scan_port, args=(i,hostname))
                 thread.start()
 
@@ -93,4 +150,9 @@ def sqlMap(request):
 
 #vulnurable headers
 def vulHeaders(request):
-    return render(request,"./pages/vul_headers.html")
+    context = {}
+    if request.method == "POST":
+        hostname = request.POST['hostname']
+        context = scanWebHeader(hostname)
+        print(context)
+    return render(request,"./pages/vul_header.html",context)

@@ -86,7 +86,6 @@ def ListServices():
     resume = 0
     accessSCM = win32con.GENERIC_READ
     accessSrv = win32service.SC_MANAGER_ALL_ACCESS
-
     #Open Service Control Manager
     hscm = win32service.OpenSCManager(None, None, accessSCM)
 
@@ -108,18 +107,18 @@ def openPorts(request):
     if request.method == "POST":
         openPortsList.clear()
         hostname = request.POST['hostname']
-        ports_scan = request.POST['scanop']
+        # ports_scan = request.POST['scanop']
 
         #udp 4096 - 65535
-        if ports_scan == "tcp":
-            scan_range = range(0,4095)
-        elif ports_scan == "udp":
-            scan_range = range(4096,65535)
-        else:
-            scan_range = range(0,65535)
+        # if ports_scan == "tcp":
+        #     scan_range = range(0,4095)
+        # elif ports_scan == "udp":
+        #     scan_range = range(4096,65535)
+        # else:
+        #     scan_range = range(0,65535)
 
         try:
-            for i in scan_range:
+            for i in range(0,5000):
                 thread = threading.Thread(target=scan_port, args=(i,hostname))
                 thread.start()
 

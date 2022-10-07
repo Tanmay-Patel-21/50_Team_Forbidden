@@ -11,13 +11,19 @@ import sys
 import socket
 from datetime import datetime
 import requests
+from . import hack
+
 #Functions
+def getIP(hostname):
+    host_ip = socket.gethostbyname(hostname)
+    return host_ip              
+
 
 def scanWebHeader(domain):
     #"https://www.hackthissite.org"
     headers = requests.get(domain).headers
-    print(requests.get(domain))
-    print(headers)
+    # print(requests.get(domain))
+    # print(headers)
     for key in headers:
         print(key)
     # X-Frame-Options Referrer-Policy Content-Security-Policy Permissions-Policy X-Content-Type-Options Strict-Transport-Security X-XSS-Protection
@@ -55,6 +61,7 @@ def scanWebHeader(domain):
     
     
     context = {
+        "Header":headers,
         "headerHas" : headerHas,
         "headerHasNot": headerHasNot
     }
@@ -64,24 +71,26 @@ def scanWebHeader(domain):
 openPortsList = [] #open ports array global variable
 def scan_port(port,hostname):
     # we will check port of localhost
-    host = hostname
+    host = "localhost"
     host_ip = socket.gethostbyname(host)
+
     # print("host_ip = {}".format(host_ip))
     status = False
+
     # create instance of socket
     s = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
+
     # connecting the host ip address and port
     try:
         s.connect((host_ip, port))
         status = True
     except:
         status = False
-    if status:
-        print("port {} is open".format(port))
-        portNumber = "{}".format(port)
-        openPortsList.append(portNumber)
-        return port
 
+    if status:
+        # print("port {} is open".format(port))
+        openPortsList.append(port)
+        return port
 
 all_services=[]
 def ListServices():
@@ -96,13 +105,40 @@ def ListServices():
     stateFilter = win32service.SERVICE_STATE_ALL
     statuses = win32service.EnumServicesStatus(hscm, typeFilter, stateFilter)
     for x in statuses:
-        print(x) 
+        # print(x) 
         all_services.append(x)
 
 #Redirecting views
 #Home
 def dashboard(request):
-    return render(request,"./index.html")
+
+    if request.method == "POST":
+        openPortsList.clear()
+        hostname = request.POST['hostname']
+        tranferProtocol = request.POST['tranferProtocol']
+        print(tranferProtocol)
+        try:
+            host_ip = getIP(hostname) 
+            header_details = hack.scanWebHeader(tranferProtocol+"://"+hostname)
+            for i in range(0,5000):
+                thread = threading.Thread(target=scan_port, args=(i,hostname))
+                thread.start()
+            context = { 
+                "openPort": openPortsList,
+                "hostname":hostname,
+                "host_ip": host_ip,
+                "header_details" :header_details['header'],
+                "headerHas" : header_details['headerHas'],
+                "headerHasNot": header_details['headerHasNot'],
+            }
+            return render(request,"./index.html",context)
+        except Exception as err:
+            print(err)
+    context ={
+        "opePort":"Scan"
+    }
+
+    return render(request,"./index.html",context)
 
 #open Ports
 def openPorts(request):
@@ -123,8 +159,6 @@ def openPorts(request):
             for i in range(0,5000):
                 thread = threading.Thread(target=scan_port, args=(i,hostname))
                 thread.start()
-
-
             context = { 
                 "openPort": openPortsList
             }

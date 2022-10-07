@@ -1,4 +1,7 @@
+from ast import arguments
 from multiprocessing import context
+import pprint
+from urllib import request
 from django.shortcuts import render
 import threading
 import time
@@ -8,7 +11,6 @@ import sys
 import socket
 from datetime import datetime
 import requests
-
 #Functions
 
 def scanWebHeader(domain):
@@ -155,3 +157,8 @@ def vulHeaders(request):
         context = scanWebHeader(hostname)
         print(context)
     return render(request,"./pages/vul_header.html",context)
+
+
+
+
+    

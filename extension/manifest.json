@@ -1,0 +1,15 @@
+{
+    "manifest_version": 2,
+  
+    "name": "Website blocker",
+    "description": "This extension blocks unsecure Websites",
+    "version": "1.0",
+    "browser_action": {
+      "default_popup": "index.html"
+    },
+    "permissions": [
+      "activeTab",
+      "tabs",
+      "https://ajax.googleapis.com/"
+    ]
+  }

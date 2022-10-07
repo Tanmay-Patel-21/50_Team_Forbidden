@@ -34,7 +34,5 @@ def block_websites(start_hour, end_hour):
                 hostfile.truncate()
             print("Good Time")
         time.sleep(3)
-
-
 # if __name__ == "__main__":
 #     block_websites(9, 21)

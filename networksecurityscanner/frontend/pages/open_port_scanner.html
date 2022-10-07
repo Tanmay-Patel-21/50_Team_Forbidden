@@ -7,6 +7,13 @@
     <title>Document</title>
 </head>
 <body>
-<a href="/openPorts">Scan for open Ports</a>
+    <form method="post">
+        {% csrf_token %}
+        <input type="text" name="hostname" id="">
+        <button type="Submit">Submit</button>
+        <div>
+            {{ openPort }}
+        </div>
+    </form>
 </body>
 </html>

@@ -128,6 +128,7 @@ def dashboard(request):
                     "header_details" :header_details['header'],
                     "headerHas" : header_details['headerHas'],
                     "headerHasNot": header_details['headerHasNot'],
+                    
                 }
                 return render(request,"./index.html",context)
             except Exception as err:
@@ -136,14 +137,18 @@ def dashboard(request):
             #Extensive scan code here 
             nm=nmap.PortScanner()
             scan_range=nm.scan(hosts=hostname,arguments='-A')
-            dict= pprint.pprint(scan_range['scan'])
-            print(dict)
-            dict=scan_range['scan']
-            print(dict)
+            extensiveScan= pprint.pprint(scan_range['scan'])
+            print(extensiveScan)
+            extensiveScan=scan_range['scan']
+            # print(dict)
             pass
+            context ={
+                "opePort":"Scan",
+                "extensiveScan":extensiveScan
+            }
     context ={
         "opePort":"Scan",
-        "dict":"dict"
+        "extensiveScan":""
     }
 
     return render(request,"./index.html",context)

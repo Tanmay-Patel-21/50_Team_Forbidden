@@ -136,10 +136,14 @@ def dashboard(request):
             #Extensive scan code here 
             nm=nmap.PortScanner()
             scan_range=nm.scan(hosts=hostname,arguments='-A')
-            pprint.pprint(scan_range['scan'])
+            dict= pprint.pprint(scan_range['scan'])
+            print(dict)
+            dict=scan_range['scan']
+            print(dict)
             pass
     context ={
-        "opePort":"Scan"
+        "opePort":"Scan",
+        "dict":"dict"
     }
 
     return render(request,"./index.html",context)

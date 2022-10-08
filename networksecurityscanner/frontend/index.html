@@ -129,6 +129,7 @@
             Headers
           </div>
           <div class="value">
+<<<<<<< HEAD
             <div class="green py-1">
               {% for header in headerHasNot %}
               <button class="btn btn-danger">{{header}}</button>
@@ -139,6 +140,18 @@
               <button class="btn btn-primary">{{header}}</button>
               {% endfor %}
             </div>
+=======
+              <div class="green py-1">
+                {% for header in headerHasNot  %}
+                  <button class="btn btn-danger ">{{header}}</button>
+                {% endfor %}
+              </div>
+              <div class="red py-1">
+                {% for header in headerHas  %}
+                  <button class="btn btn-primary">{{header}}</button>
+                {% endfor %}
+              </div>
+>>>>>>> b69dc21bd964884df88b8928552846a271b0d5ab
           </div>
 
 
@@ -149,10 +162,35 @@
   </div>
 
 
+<<<<<<< HEAD
   <div class="scan-details-container">
     <div>
       <div class="detail-head">
         <h2>Missing Headers</h2>
+=======
+    <div class="scan-details-container">
+      <div>
+          <div class="detail-head">
+            <h2>Missing Headers</h2>
+          </div>
+  
+          <div class="scan-details">
+            <div class="details">
+
+              {% for missingHeaders in headerHasNot  %}
+              <div class="key">
+                {{missingHeaders}}
+              </div>
+              <div class="value">
+                <!-- <a href="{{hostname}}" target="__blank">{{hostname}}</a> -->
+              </div>
+              {% endfor %}
+
+            </div>
+
+          </div>
+        </div>
+>>>>>>> b69dc21bd964884df88b8928552846a271b0d5ab
       </div>
 
       <div class="scan-details">
@@ -168,6 +206,33 @@
           {% endfor %}
 
         </div>
+<<<<<<< HEAD
+=======
+      </div>
+  
+      {% if tranferProtocol == "http" %}
+      <div class="scan-details-container">
+        <div>
+            <div class="detail-head">
+              <h2>Warnings</h2>
+            </div>
+            <div class="scan-details">
+              <div class="details">
+
+                <div class="key">
+                    Site is using HTTP
+                </div>
+                <div class="value">
+                  This site is served in HTTP and did not redirected in HTTPS.
+                </div>
+  
+              </div>
+            </div>
+          </div>
+        </div>
+      {% endif %}
+
+>>>>>>> b69dc21bd964884df88b8928552846a271b0d5ab
 
       </div>
     </div>

@@ -1,15 +1,14 @@
-from multiprocessing import context
+from operator import imod
+from pprint import pprint
 from django.shortcuts import render
 import threading
-import time
 import win32con
 import win32service
-import sys
 import socket
-from datetime import datetime
 import requests
 from . import hack
-
+import nmap
+import pprint
 #Functions
 def getIP(hostname):
     host_ip = socket.gethostbyname(hostname)
@@ -113,24 +112,32 @@ def dashboard(request):
         openPortsList.clear()
         hostname = request.POST['hostname']
         tranferProtocol = request.POST['tranferProtocol']
-        print(tranferProtocol)
-        try:
-            host_ip = getIP(hostname) 
-            header_details = hack.scanWebHeader(tranferProtocol+"://"+hostname)
-            for i in range(0,5000):
-                thread = threading.Thread(target=scan_port, args=(i,hostname))
-                thread.start()
-            context = { 
-                "openPort": openPortsList,
-                "hostname":hostname,
-                "host_ip": host_ip,
-                "header_details" :header_details['header'],
-                "headerHas" : header_details['headerHas'],
-                "headerHasNot": header_details['headerHasNot'],
-            }
-            return render(request,"./index.html",context)
-        except Exception as err:
-            print(err)
+        scanType = request.POST['scanType']
+        if scanType == "light":
+            try:
+                host_ip = getIP(hostname) 
+                header_details = hack.scanWebHeader(tranferProtocol+"://"+hostname)
+                for i in range(0,5000):
+                    thread = threading.Thread(target=scan_port, args=(i,hostname))
+                    thread.start()
+                context = { 
+                    "openPort": openPortsList,
+                    "tranferProtocol":tranferProtocol,
+                    "hostname":hostname,
+                    "host_ip": host_ip,
+                    "header_details" :header_details['header'],
+                    "headerHas" : header_details['headerHas'],
+                    "headerHasNot": header_details['headerHasNot'],
+                }
+                return render(request,"./index.html",context)
+            except Exception as err:
+                print(err)
+        else:
+            #Extensive scan code here 
+            nm=nmap.PortScanner()
+            scan_range=nm.scan(hosts=hostname,arguments='-A')
+            pprint.pprint(scan_range['scan'])
+            pass
     context ={
         "opePort":"Scan"
     }

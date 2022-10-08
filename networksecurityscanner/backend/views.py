@@ -136,10 +136,11 @@ def dashboard(request):
             #Extensive scan code here 
             nm=nmap.PortScanner()
             extensiveScan=nm.scan(hosts=hostname,arguments='-A')
+
             print(extensiveScan)
             context ={
                 "opePort":"Scan",
-                "extensiveScan":extensiveScan
+                "extensiveScan":extensiveScan['scan']
             }
             return render(request,"./index.html",context)
     context ={

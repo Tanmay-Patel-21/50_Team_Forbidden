@@ -53,6 +53,7 @@ function getCurrentTabUrl () {
             }
             else{
                 missingHeaders.push("strict-transport-security")
+                document.write("Site is prone to man-in-the-middle-attacks\n")
             }
 
             if(headers.includes('X-XSS-Protection')){
@@ -60,9 +61,10 @@ function getCurrentTabUrl () {
             }
             else{
                 missingHeaders.push("X-XSS-Protection")
+                document.write("Site is prone to XSS attacks\n")
             }
-            document.write("Missing Headers: "+missingHeaders);
+            // document.write(missingHeaders);
             // alert("<br>Missing Headers:" + headers.includes("x-content-security-policy"))
-            // alert(headers);
+            alert(headers);
 });    
 }

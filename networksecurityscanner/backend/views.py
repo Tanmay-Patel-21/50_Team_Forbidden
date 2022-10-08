@@ -152,18 +152,21 @@ def dashboard(request):
                 return render(request,"./index.html",context)
             except Exception as err:
                 print(err)
-        else:
+        elif scanType=="extensive":
             #Extensive scan code here 
             nm=nmap.PortScanner()
             extensiveScan=nm.scan(hosts=hostname,arguments='-A')
+            header_details = hack.scanWebHeader(tranferProtocol+"://"+hostname)
+
             # print(type(extensiveScan['scan']))
             # pprint(list(extensiveScan['scan'].items()))
             extensiveScanList = list(extensiveScan['scan'].items())
+            print(extensiveScanList)
             host_ip = list(extensiveScan['scan'].items())[0][1]['addresses']['ipv4']
-            hostnames = list(extensiveScan['scan'].items())[0][1]['hostnames']['name']
+            hostnames = list(extensiveScan['scan'].items())[0][1]['hostnames']
             portused = list(extensiveScan['scan'].items())[0][1]['portused']
             sslDetails = list(extensiveScan['scan'].items())[0][1]['tcp'][443]['script']['ssl-cert']
-            header_details = hack.scanWebHeader(tranferProtocol+"://"+hostname)
+
             # pprint(list(extensiveScan['scan'].items())[0][1]['hostnames'])
             # pprint(list(extensiveScan['scan'].items())[0][1]['portused'])
             # pprint(list(extensiveScan['scan'].items())[0][1]['tcp'])
@@ -172,14 +175,18 @@ def dashboard(request):
 
             context ={
                 "scanType":"notScanned",
+                "extensiveScan":extensiveScan,
                 "hostname":hostnames,
                 "host_ip":host_ip,
                 "hostnames":hostnames,
                 "portused":portused,
                 "sslDetails":sslDetails,
+                "scanType":scanType,
+                "tranferProtocol":tranferProtocol,
                 "header_details" :header_details['header'],
                 "headerHas" : header_details['headerHas'],
                 "headerHasNot": header_details['headerHasNot'],
+                "headerInfo":header_info,
                 "scanType":scanType
             }
             f = open("test.txt", "w")

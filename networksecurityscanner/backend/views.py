@@ -146,6 +146,7 @@ def dashboard(request):
                 "opePort":"Scan",
                 "extensiveScan":extensiveScan
             }
+            return render(request,"./index.html",context)
     context ={
         "opePort":"Scan",
         "extensiveScan":""
@@ -169,7 +170,7 @@ def openPorts(request):
         #     scan_range = range(0,65535)
 
         try:
-            for i in range(0,5000):
+            for i in range(0,65535):
                 thread = threading.Thread(target=scan_port, args=(i,hostname))
                 thread.start()
             context = { 

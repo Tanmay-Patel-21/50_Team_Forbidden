@@ -119,6 +119,13 @@
           </div>
 
           <div class="key">
+            Site
+          </div>
+          <div class="value">
+            <a href="{{hostname}}" target="__blank">{{hostname}}</a>
+          </div>
+
+          <div class="key">
             IP Address
           </div>
           <div class="value">
@@ -129,10 +136,15 @@
             Headers
           </div>
           <div class="value">
-<<<<<<< HEAD
+
+
             <div class="green py-1">
               {% for header in headerHasNot %}
               <button class="btn btn-danger">{{header}}</button>
+
+            <div class="green py-1">
+              {% for header in headerHasNot %}
+              <button class="btn btn-danger ">{{header}}</button>
               {% endfor %}
             </div>
             <div class="red py-1">
@@ -140,7 +152,8 @@
               <button class="btn btn-primary">{{header}}</button>
               {% endfor %}
             </div>
-=======
+
+
               <div class="green py-1">
                 {% for header in headerHasNot  %}
                   <button class="btn btn-danger ">{{header}}</button>
@@ -151,7 +164,7 @@
                   <button class="btn btn-primary">{{header}}</button>
                 {% endfor %}
               </div>
->>>>>>> b69dc21bd964884df88b8928552846a271b0d5ab
+
           </div>
 
 
@@ -162,35 +175,83 @@
   </div>
 
 
-<<<<<<< HEAD
+
+
+
   <div class="scan-details-container">
     <div>
       <div class="detail-head">
         <h2>Missing Headers</h2>
-=======
+
+
     <div class="scan-details-container">
       <div>
           <div class="detail-head">
             <h2>Missing Headers</h2>
+
+      </div>
+
+      <div class="scan-details">
+        <div class="details">
+
+          {% for missingHeaders in headerHasNot %}
+          <div class="key">
+            {{missingHeaders}}
           </div>
-  
-          <div class="scan-details">
-            <div class="details">
-
-              {% for missingHeaders in headerHasNot  %}
-              <div class="key">
-                {{missingHeaders}}
-              </div>
-              <div class="value">
-                <!-- <a href="{{hostname}}" target="__blank">{{hostname}}</a> -->
-              </div>
-              {% endfor %}
-
-            </div>
-
+          <div class="value">
+            <!-- <a href="{{hostname}}" target="__blank">{{hostname}}</a> -->
           </div>
+          {% endfor %}
+
         </div>
->>>>>>> b69dc21bd964884df88b8928552846a271b0d5ab
+
+      </div>
+    </div>
+  </div>
+
+
+
+  <div class="scan-details-container">
+    <div>
+      <div class="detail-head">
+        <h2>Raw Headers</h2>
+      </div>
+
+      <div class="scan-details">
+        <div class="details">
+
+          {% for header,header_value in header_details.items %}
+          <div class="key">
+            {{header}}
+          </div>
+          <div class="value">
+            {{header_value}}
+          </div>
+          {% endfor %}
+
+        </div>
+
+      </div>
+    </div>
+  </div>
+
+  {% if tranferProtocol == "http" %}
+  <div class="scan-details-container">
+    <div>
+      <div class="detail-head">
+        <h2>Warnings</h2>
+      </div>
+      <div class="scan-details">
+        <div class="details">
+
+          <div class="key">
+            Site is using HTTP
+          </div>
+          <div class="value">
+            This site is served in HTTP and did not redirected in HTTPS.
+          </div>
+
+        </div>
       </div>
 
       <div class="scan-details">
@@ -206,8 +267,6 @@
           {% endfor %}
 
         </div>
-<<<<<<< HEAD
-=======
       </div>
   
       {% if tranferProtocol == "http" %}
@@ -232,7 +291,6 @@
         </div>
       {% endif %}
 
->>>>>>> b69dc21bd964884df88b8928552846a271b0d5ab
 
       </div>
     </div>
@@ -264,4 +322,13 @@
     </div>
   </div>
 </body>
+
+    </div>
+  </div>
+  {% endif %}
+  <div class="extensive">
+    {{extensiveScan}}
+  </div>
+</body>
+
 </html>

@@ -1,3 +1,5 @@
+from operator import imod
+from pprint import pprint
 from django.shortcuts import render
 import threading
 import win32con
@@ -5,7 +7,8 @@ import win32service
 import socket
 import requests
 from . import hack
-
+import nmap
+import pprint
 #Functions
 def getIP(hostname):
     host_ip = socket.gethostbyname(hostname)
@@ -131,6 +134,9 @@ def dashboard(request):
                 print(err)
         else:
             #Extensive scan code here 
+            nm=nmap.PortScanner()
+            scan_range=nm.scan(hosts=hostname,arguments='-A')
+            pprint.pprint(scan_range['scan'])
             pass
     context ={
         "opePort":"Scan"

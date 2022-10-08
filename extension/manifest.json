@@ -8,8 +8,13 @@
       "default_popup": "index.html"
     },
     "permissions": [
+      "webRequest",
+      "*://*.google.com/",
       "activeTab",
-      "tabs",
       "https://ajax.googleapis.com/"
-    ]
+    ],
+    "background": {
+      "service_worker": "./funcs.js",
+      "persistent": false
+    }
   }

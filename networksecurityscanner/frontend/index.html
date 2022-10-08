@@ -101,7 +101,7 @@
       </div>
     </form>
   </div>
-  {% if scanType == "light" %}
+  {% if scanType != "Scan" %}
 
   <div class="scan-details-container">
     <div>
@@ -180,31 +180,6 @@
     </div>
   </div>
 
-
-
-  <div class="scan-details-container">
-    <div>
-      <div class="detail-head">
-        <h2>Raw Headers</h2>
-      </div>
-
-      <div class="scan-details">
-        <div class="details">
-
-          {% for header,header_value in header_details.items %}
-          <div class="key">
-            {{header}}
-          </div>
-          <div class="value">
-            {{header_value}}
-          </div>
-          {% endfor %}
-
-        </div>
-
-      </div>
-    </div>
-  </div>
 
   {% if tranferProtocol == "http" %}
   <div class="scan-details-container">
@@ -295,20 +270,70 @@
 
     </div>
   </div>
-  {% elif scanType == "extensive" %}
+  {% endif %}
+  {% if scanType == "extensive" %}
 
-  <div class="extensive">
+  <div class="scan-details-container">
+    <div>
+      <div class="detail-head">
+        <h2>Detailed Summary</h2>
+      </div>
 
-  {{hostname}}
-  {{host_ip}}
-  {{portused}}
-  {{sslDetails}}
-  {{headerHas}}
-  {{headerHasNot}}
-}
-  
+      <div class="scan-details">
+        <div class="details">
 
+          <div class="key">
+            Hostname
+          </div>
+          <div class="value">
+            {{hostname}}
+          </div>
+
+        <div class="key">
+          Ip address
+        </div>
+        <div class="value">
+          {{host_ip}}
+        </div>
+
+      <div class="key">
+        Ports Used
+      </div>
+      <div class="value">
+        {{portused}}
+      </div>
+
+      <div class="key">
+      SSL Details
+    </div>
+    <div class="value">
+      {{sslDetails}}
+    </div>
+
+      </div>
+    </div>
   </div>
+
+  <div class="scan-details-container">
+    <div>
+        <div class="detail-head">
+          <h2>Missing Headers</h2>
+
+    </div>
+
+  
+  <div>
+    <div class="scan-details-container">
+      <div>
+          <div class="detail-head">
+            <h2>Raw Data</h2>
+          </div>
+          <div>
+            {{list_data}}
+          </div>
+      </div>
+
+
   {% endif %}
   
 </body>

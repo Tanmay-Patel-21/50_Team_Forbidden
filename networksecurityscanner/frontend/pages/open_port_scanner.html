@@ -1,112 +1,241 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
-    <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Open Ports</title>
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
-    <style>
-        #searchbar{
-	margin-left: 16%;
-	padding:15px;
-	border-radius: 10px;
-}
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Open Ports</title>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
 
-.home-bg{
-    background-color: rgb(86, 103, 254);
-    opacity: 20px;
-    width: 100%;
-    height: 80vh;
-}
 
-input[type=text] {
-	width: 10%;
-	-webkit-transition: width 0.15s ease-in-out;
-	transition: width 0.15s ease-in-out;
-}
+  <link href="//maxcdn.bootstrapcdn.com/bootstrap/4.1.1/css/bootstrap.min.css" rel="stylesheet" id="bootstrap-css">
+  <script src="//maxcdn.bootstrapcdn.com/bootstrap/4.1.1/js/bootstrap.min.js"></script>
+  <link href="https://fonts.googleapis.com/css?family=Raleway:400,500,500i,700,800i" rel="stylesheet">
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0-beta1/dist/css/bootstrap.min.css" rel="stylesheet"
+    integrity="sha384-0evHe/X+R7YkIZDRvuzKMRqM+OrBnVFBL6DOitfPri4tjfHxaWutUpFmBp4vmVor" crossorigin="anonymous">
+  <style>
+    #searchbar {
+      margin-left: 16%;
+      margin-top: 20px;
+      padding: 15px;
+      border-radius: 10px;
+    }
 
-/* When the input field gets focus,
+    * {
+      margin: 0;
+      padding: 0;
+    }
+
+    .loader {
+      display: none;
+      top: 50%;
+      left: 50%;
+      position: absolute;
+      transform: translate(-50%, -50%);
+    }
+
+    .loading {
+      border: 4px solid #ccc;
+      width: 60px;
+      height: 60px;
+      border-radius: 50%;
+      border-top-color: #ff0000;
+      border-left-color: #f50000;
+      animation: spin 1s infinite ease-in;
+    }
+
+    @keyframes spin {
+      0% {
+        transform: rotate(0deg);
+      }
+
+      100% {
+        transform: rotate(360deg);
+      }
+    }
+
+    .home-bg {
+      opacity: 20px;
+      width: 100%;
+      height: 100vh;
+    }
+
+    input[type=text] {
+      width: 10%;
+      -webkit-transition: width 0.15s ease-in-out;
+      transition: width 0.15s ease-in-out;
+    }
+
+    /* When the input field gets focus,
 		change its width to 100% */
-input[type=text]:focus {
-	width: 30%;
-}
+    input[type=text]:focus {
+      width: 30%;
+    }
 
-#list{
-	font-size: 1.5em;
-	margin-left: 90px;
-}
+    #list {
+      font-size: 1.5em;
+      margin-left: 150px;
+    }
 
-.animals{
-display: list-item;	
-}
+    ol {
+      list-style: none;
+    }
 
-    </style>
-    <script>
-        // JavaScript code
-function search_animal() {
-	let input = document.getElementById('searchbar').value
-	input=input.toLowerCase();
-	let x = document.getElementsByClassName('animals');
-	
-	for (i = 0; i < x.length; i++) {
-		if (!x[i].innerHTML.toLowerCase().includes(input)) {
-			x[i].style.display="none";
-		}
-		else {
-			x[i].style.display="list-item";				
-		}
-	}
-}
-    </script>
+    ol li:after {
+      content: '✓';
+    }
+
+    .animals {
+      display: list-item;
+    }
+
+    body {
+      background-color: #f8e8e0;
+      justify-content: center;
+    }
+
+    .card {
+      width: 50vw;
+      background-color: rgba(0, 0, 0, 0.568);
+      backdrop-filter: blur(2px);
+      padding: 5vh;
+      box-shadow: 0 0 10vmin #03142e;
+      border-radius: 10px;
+      grid-template-columns: auto;
+      display: grid;
+      justify-self: center;
+      align-self: center;
+      margin-top: 10%;
+    }
+
+    .container {
+      display: flex;
+      justify-content: space-around;
+      align-items: center;
+    }
+  </style>
+  <script>
+
+    function spinner() {
+      document.getElementsByClassName("loader")[0].style.display = "block";
+    }
+
+    // JavaScript code
+    function search_animal() {
+      let input = document.getElementById('searchbar').value
+      input = input.toLowerCase();
+      let x = document.getElementsByClassName('animals');
+
+      for (i = 0; i < x.length; i++) {
+        if (!x[i].innerHTML.toLowerCase().includes(input)) {
+          x[i].style.display = "none";
+        }
+        else {
+          x[i].style.display = "list-item";
+        }
+      }
+    }
+
+  </script>
 
 </head>
+
 <body>
-    <div class="home-bg">
+
+  <div class="container-fluid" style="color: white ;">
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0-beta1/dist/js/bootstrap.bundle.min.js"
+      integrity="sha384-pprn3073KE6tl6bjs2QrFaJGz5/SUsLqktiwsUTF55Jfv3qYSDhgCecCxMW52nD2"
+      crossorigin="anonymous"></script>
+
+    <nav class="navbar bg-light fixed-top">
+      <div class="container-fluid">
+        <a class="navbar-brand" href="#">Network Security Scanner </a>
+        <button class="navbar-toggler" type="button" data-bs-toggle="offcanvas" data-bs-target="#offcanvasNavbar"
+          aria-controls="offcanvasNavbar">
+          <span class="fa fa-bars"></span>
+        </button>
+        <div class="offcanvas offcanvas-end" tabindex="-1" id="offcanvasNavbar" aria-labelledby="offcanvasNavbarLabel">
+          <div class="offcanvas-header">
+            <h5 class="offcanvas-title" id="offcanvasNavbarLabel">Our Services</h5>
+            <button type="button" class="btn-close" data-bs-dismiss="offcanvas" aria-label="Close"></button>
+          </div>
+          <div class="offcanvas-body">
+            <ul class="navbar-nav justify-content-end flex-grow-1 pe-3">
+              <li class="nav-item">
+                <a class="nav-link active" aria-current="page" href="#top">Home</a>
+              </li>
+              <li class="nav-item">
+                <a href="/openPorts">Open Ports</a>
+              </li>
+
+              <li class="nav-item">
+                <a class="nav-link" href="#main4">Contact me</a>
+              </li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </nav>
+  </div>
+
+  <div class="home-bg">
 
     <form method="post">
-        {% csrf_token %}
-        <h1 style="	margin-left: 15%;
-        padding:15px;
-        border-radius: 10px; color:white;">Enter your host name:<br>
-        </h1>
-        <input id="searchbar" onkeyup="search_animal()" type="text"
-        name="hostname" placeholder="Search host names.." style="margin-top: -10px;" >
-        <!-- <select name="scanop">
-            <option value="tcp">
-                    Scan TCP Ports
-            </option>
-            
-            <option value="udp">
-                Scan UDP Ports
-           </option>
-        
-            <option value="userdefined">
-            Scan All
-            </option>
+      {% csrf_token %}
+      <div class="container">
+        <div class="card">
+          <h1 style="
+        padding:20px;
+        border-radius: 10px; color:rgb(255, 255, 255);">Enter your host name:<br>
+          </h1>
 
-        </select>
-       -->
-    <!-- ordered list -->
-    <br><br>
-    <button type="Submit" style="	margin-left: 16%;
+          <h4 style="	
+        padding:20px;
+        border-radius: 10px; color:rgb(255, 255, 255);">
+            Check how many Open Ports are present in the particular domain!
+          </h4>
+
+
+      <input id="searchbar" onkeyup="search_animal()" type="text" name="hostname" placeholder="Search host names.."
+        style="margin-top: 12px;
+        margin-left: 12%;
+           height: 50px;
+     width: 500px;">
+
+      <br><br>
+      <button type="Submit" style="
+       height: 50px;
+     width: 300px;	margin-left: 28%;
     padding:15px;
-    border-radius: 10px;"class="fa fa-search">
-</button>
-    <ol id='list'>
-            {% for port in openPort %}
-            <li class="animals" style="color: white ;">  
-                {{ port }}        
+    border-radius: 10px;" class="fa fa-search" onclick="spinner()">
+      </button>
+    </div>
+  </div>
+      <div class="loader">
+        <div class="loading">
+        </div>
+      </div>
+      <ol>
+        {% for port in openPort %}
+        <box class="table" style="border: 2px; size: 20px;margin-left: 50%;color: rgb(255, 255, 255);">
+          <ol id='list' display="block">
+            <li class="animals" style="color: rgb(255, 255, 255) ;">
+              Port number: {{ port }}
             </li>
-            {% endfor %}
-    </ol>
-      
-    <!-- linking javascript -->
-    <script src="./animals.js"></script>
+          </ol>
+        </box>
+        {% endfor %}
 
-    
-       
+      </ol>
+
+      <!-- linking javascript -->
+      <script src="./animals.js"></script>
+
+
+
     </form>
-</div>
+  </div>
 </body>
+
 </html>

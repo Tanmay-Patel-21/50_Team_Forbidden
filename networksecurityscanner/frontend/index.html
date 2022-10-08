@@ -38,9 +38,12 @@
       integrity="sha384-pprn3073KE6tl6bjs2QrFaJGz5/SUsLqktiwsUTF55Jfv3qYSDhgCecCxMW52nD2"
       crossorigin="anonymous"></script>
 
-    <nav class="navbar bg-light fixed-top">
+    <nav class="navbar bg-light fixed-top d-flex align-items-center">
       <div class="container-fluid">
-        <a class="navbar-brand" href="#">Network Security Scanner </a>
+        <a class="navbar-brand d-flex align-items-center" href="#">
+          <img src="{% static 'media/logo.png' %}" alt="">
+          <h1>Team Forbidden</h1>
+        </a>
         <button class="navbar-toggler" type="button" data-bs-toggle="offcanvas" data-bs-target="#offcanvasNavbar"
           aria-controls="offcanvasNavbar">
           <span class="fa fa-bars"></span>
@@ -58,152 +61,235 @@
               <li class="nav-item">
                 <a href="/openPorts">Open Ports</a>
               </li>
-              <li class="nav-item">
-                <a class="nav-link" href="#main3">My Projects</a>
+              <!-- <li class="nav-item">
+                <a class="nav-link" href="#main3">My Projects</a> -->
               </li>
-              <li class="nav-item">
+              <!-- <li class="nav-item">
                 <a class="nav-link" href="#main4">Contact me</a>
-              </li>
+              </li> -->
             </ul>
-            <form class="d-flex" role="search">
+            <!-- <form class="d-flex" role="search">
               <input class="form-control me-2" type="search" placeholder="Search" aria-label="Search">
               <button class="btn btn-outline-success" type="submit">Search</button>
-            </form>
+            </form> -->
           </div>
         </div>
       </div>
     </nav>
   </div>
-  <div class="home-bg">
-    <form class="form" action="" method="post" enctype="multipart/form-data">
-      {% csrf_token %}
-      <div class="form-elements">
-        <div class="input-group mb-3">
-          <div class="input-group-prepend">
-            <span class="input-group-text" id="basic-addon1">
-              <select class="form-control w-100 h-100" name="tranferProtocol">
-                <option value="https">HTTPS</option>
-                <option value="http">HTTP</option>
-              </select>
-            </span>
+  <div class="main-body">
+    <div class="home-bg">
+      <form class="form" action="" method="post" enctype="multipart/form-data">
+        {% csrf_token %}
+        <div class="form-elements">
+          <h1>Header Info</h1>
+          <div class="input-group mb-3">
+            <div class="input-group-prepend">
+              <span class="input-group-text" id="basic-addon1">
+                <select class="form-control w-100 h-100" name="tranferProtocol">
+                  <option value="https">HTTPS</option>
+                  <option value="http">HTTP</option>
+                </select>
+              </span>
+            </div>
+            <input type="text" class="form-control" name="hostname" placeholder="Hostname" aria-label="Username"
+              aria-describedby="basic-addon1">
           </div>
-          <input type="text" class="form-control" name="hostname" placeholder="Hostname" aria-label="Username"
-            aria-describedby="basic-addon1">
+          <div class="input-group mb-3">
+            <select class="scan-type form-control" name="scanType" id="">
+              <option value="light">Light Scan</option>
+              <option value="extensive">Extensive Scan</option>
+            </select>
+          </div>
+
+          <button type="submit" class="btn btn-warning"> <i class="fa fa-search"></i> Scan</button>
         </div>
-        <div class="input-group mb-3">
-          <select class="scan-type form-control" name="scanType" id="">
-            <option value="light">Light Scan</option>
-            <option value="extensive">Extensive Scan</option>
-          </select>
+      </form>
+    </div>
+    <div class="scan-details-container">
+      <div>
+        <div class="detail-head">
+          <h2>Scan Report Summary</h2>
         </div>
 
-        <button type="submit" class="btn btn-warning"> <i class="fa fa-search"></i> Scan</button>
-      </div>
-    </form>
-  </div>
-  <div class="scan-details-container">
-    <div>
-      <div class="detail-head">
-        <h2>Scan Report Summary</h2>
-      </div>
-
-      <div class="scan-details">
-        <div class="details">
+        <div class="scan-details">
+          <div class="details">
 
 
-          <div class="key">
-            Site
-          </div>
-          <div class="value">
-            <a href="{{hostname}}" target="__blank">{{hostname}}</a>
-          </div>
-
-          <div class="key">
-            Site
-          </div>
-          <div class="value">
-            <a href="{{hostname}}" target="__blank">{{hostname}}</a>
-          </div>
-
-          <div class="key">
-            IP Address
-          </div>
-          <div class="value">
-            {{host_ip}}
-          </div>
-
-          <div class="key">
-            Headers
-          </div>
-          <div class="value">
+            <div class="key">
+              Site
+            </div>
+            <div class="value">
+              <a href="{{hostname}}" target="__blank">{{hostname}}</a>
+            </div>
 
 
-            <div class="green py-1">
-              {% for header in headerHasNot %}
-              <button class="btn btn-danger">{{header}}</button>
-              {% endfor %}
-              <div class="green py-1">
-                {% for header in headerHasNot %}
-                <button class="btn btn-danger ">{{header}}</button>
-                {% endfor %}
-              </div>
-              <div class="red py-1">
-                {% for header in headerHas %}
-                <button class="btn btn-primary">{{header}}</button>
-                {% endfor %}
-              </div>
+            <div class="key">
+              IP Address
+            </div>
+            <div class="value">
+              {{host_ip}}
+            </div>
+
+            <div class="key">
+              Headers
+            </div>
+            <div class="value">
 
 
               <div class="green py-1">
                 {% for header in headerHasNot %}
-                <button class="btn btn-danger ">{{header}}</button>
+                <button class="btn btn-danger">{{header}}</button>
+
                 {% endfor %}
-              </div>
-              <div class="red py-1">
-                {% for header in headerHas %}
-                <button class="btn btn-primary">{{header}}</button>
-                {% endfor %}
+                <div class="green py-1">
+                  {% for header in headerHasNot %}
+                  <button class="btn btn-danger ">{{header}}</button>
+                  {% endfor %}
+                </div>
+                <div class="red py-1">
+                  {% for header in headerHas %}
+                  <button class="btn btn-primary">{{header}}</button>
+                  {% endfor %}
+                </div>
+
+
+                <div class="green py-1">
+                  {% for header in headerHasNot %}
+                  <button class="btn btn-danger ">{{header}}</button>
+                  {% endfor %}
+                </div>
+                <div class="red py-1">
+                  {% for header in headerHas %}
+                  <button class="btn btn-primary">{{header}}</button>
+                  {% endfor %}
+                </div>
+
               </div>
 
+
+
+            </div>
+          </div>
+        </div>
+      </div>
+
+
+
+
+
+      <div class="scan-details-container">
+        <div>
+          <div class="detail-head">
+            <h2>Missing Headers</h2>
+
+
+            <div class="scan-details-container">
+              <div>
+                <div class="detail-head">
+                  <h2>Missing Headers</h2>
+
+                </div>
+
+                <div class="scan-details">
+                  <div class="details">
+
+                    {% for missingHeaders in headerHasNot %}
+                    <div class="key">
+                      {{missingHeaders}}
+                    </div>
+                    <div class="value">
+                      <!-- <a href="{{hostname}}" target="__blank">{{hostname}}</a> -->
+                    </div>
+                    {% endfor %}
+
+                  </div>
+
+                </div>
+              </div>
             </div>
 
 
 
-          </div>
-        </div>
-      </div>
-    </div>
-
-
-
-
-
-    <div class="scan-details-container">
-      <div>
-        <div class="detail-head">
-          <h2>Missing Headers</h2>
-
-
-          <div class="scan-details-container">
-            <div>
-              <div class="detail-head">
-                <h2>Missing Headers</h2>
-
-              </div>
-
-              <div class="scan-details">
-                <div class="details">
-
-                  {% for missingHeaders in headerHasNot %}
-                  <div class="key">
-                    {{missingHeaders}}
-                  </div>
-                  <div class="value">
-                    <!-- <a href="{{hostname}}" target="__blank">{{hostname}}</a> -->
-                  </div>
-                  {% endfor %}
-
+            <div class="scan-details-container">
+              <div>
+                <div class="detail-head">
+                  <h2>Raw Headers</h2>
                 </div>
+
+                <div class="scan-details">
+                  <div class="details">
+
+                    {% for header,header_value in header_details.items %}
+                    <div class="key">
+                      {{header}}
+                    </div>
+                    <div class="value">
+                      {{header_value}}
+                    </div>
+                    {% endfor %}
+
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            {% if tranferProtocol == "http" %}
+            <div class="scan-details-container">
+              <div>
+                <div class="detail-head">
+                  <h2>Warnings</h2>
+                </div>
+                <div class="scan-details">
+                  <div class="details">
+
+                    <div class="key">
+                      Site is using HTTP
+                    </div>
+                    <div class="value">
+                      This site is served in HTTP and did not redirected in HTTPS.
+                    </div>
+
+                  </div>
+                </div>
+
+                <div class="scan-details">
+                  <div class="details">
+
+                    {% for missingHeaders in headerHasNot %}
+                    <div class="key">
+                      {{missingHeaders}}
+                    </div>
+                    <div class="value">
+                      <a href="{{hostname}}" target="__blank">{{hostname}}</a>
+                    </div>
+                    {% endfor %}
+
+                  </div>
+                </div>
+
+                {% if tranferProtocol == "http" %}
+                <div class="scan-details-container">
+                  <div>
+                    <div class="detail-head">
+                      <h2>Warnings</h2>
+                    </div>
+                    <div class="scan-details">
+                      <div class="details">
+
+                        <div class="key">
+                          Site is using HTTP
+                        </div>
+                        <div class="value">
+                          This site is served in HTTP and did not redirected in HTTPS.
+                        </div>
+
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                {% endif %}
+
 
               </div>
             </div>
@@ -229,105 +315,21 @@
                   </div>
                   {% endfor %}
 
-                </div>  
-              </div>
-            </div>
-          </div>
-
-          {% if tranferProtocol == "http" %}
-          <div class="scan-details-container">
-            <div>
-              <div class="detail-head">
-                <h2>Warnings</h2>
-              </div>
-              <div class="scan-details">
-                <div class="details">
-
-                  <div class="key">
-                    Site is using HTTP
-                  </div>
-                  <div class="value">
-                    This site is served in HTTP and did not redirected in HTTPS.
-                  </div>
-
                 </div>
+
               </div>
-
-              <div class="scan-details">
-                <div class="details">
-
-                  {% for missingHeaders in headerHasNot %}
-                  <div class="key">
-                    {{missingHeaders}}
-                  </div>
-                  <div class="value">
-                    <a href="{{hostname}}" target="__blank">{{hostname}}</a>
-                  </div>
-                  {% endfor %}
-
-                </div>
-              </div>
-
-              {% if tranferProtocol == "http" %}
-              <div class="scan-details-container">
-                <div>
-                  <div class="detail-head">
-                    <h2>Warnings</h2>
-                  </div>
-                  <div class="scan-details">
-                    <div class="details">
-
-                      <div class="key">
-                        Site is using HTTP
-                      </div>
-                      <div class="value">
-                        This site is served in HTTP and did not redirected in HTTPS.
-                      </div>
-
-                    </div>
-                  </div>
-                </div>
-              </div>
-              {% endif %}
-
-
             </div>
           </div>
         </div>
+      </div>
+      {% endif %}
+      <div class="extensive">
+        {{extensiveScan}}
+      </div>
+    </div>
+  </div>
 
 
-
-        <div class="scan-details-container">
-          <div>
-            <div class="detail-head">
-              <h2>Raw Headers</h2>
-            </div>
-
-            <div class="scan-details">
-              <div class="details">
-
-                {% for header,header_value in header_details.items %}
-                <div class="key">
-                  {{header}}
-                </div>
-                <div class="value">
-                  {{header_value}}
-                </div>
-                {% endfor %}
-
-              </div>
-
-            </div>
-          </div>
-        </div>
-</body>
-
-</div>
-</div>
-{% endif %}
-<div class="extensive">
-  {{extensiveScan}}
-</div>
 </body>
 
 </html>

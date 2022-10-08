@@ -101,6 +101,8 @@
       </div>
     </form>
   </div>
+  {% if scanType == "light" %}
+
   <div class="scan-details-container">
     <div>
       <div class="detail-head">
@@ -117,6 +119,7 @@
           <div class="value">
             <a href="{{hostname}}" target="__blank">{{hostname}}</a>
           </div>
+
 
 
           <div class="key">
@@ -176,6 +179,9 @@
       </div>
     </div>
   </div>
+
+
+
   <div class="scan-details-container">
     <div>
       <div class="detail-head">
@@ -233,7 +239,6 @@
 
         </div>
       </div>
-  
       {% if tranferProtocol == "http" %}
       <div class="scan-details-container">
         <div>
@@ -254,6 +259,7 @@
             </div>
           </div>
         </div>
+      {% endif %}
       {% endif %}
 
 
@@ -286,14 +292,25 @@
       </div>
     </div>
   </div>
-</body>
 
     </div>
   </div>
-  {% endif %}
+  {% elif scanType == "extensive" %}
+
   <div class="extensive">
-    {{extensiveScan}}
+
+  {{hostname}}
+  {{host_ip}}
+  {{portused}}
+  {{sslDetails}}
+  {{headerHas}}
+  {{headerHasNot}}
+}
+  
+
   </div>
+  {% endif %}
+  
 </body>
 
 </html>
